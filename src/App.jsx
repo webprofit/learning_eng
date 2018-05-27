@@ -32,7 +32,7 @@ class App extends Component {
   }
 
   auth = () => {
-    firebase.auth().signInWithEmailAndPassword('webprofit4@gmail.com', 'Profitroli22')
+    firebase.auth().signInWithEmailAndPassword('...@gmail.com', '...')
     .catch((error) => {
       console.log(error.code); 
       console.log(error.message); 
