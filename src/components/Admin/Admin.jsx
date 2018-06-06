@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import './to-do.css';
+import './admin.css';
 
-class Todo extends Component {
+class Admin extends Component {
   render() {
     return (
       <span className="todo-span">
@@ -12,4 +12,4 @@ class Todo extends Component {
   }
 }
 
-export default Todo;
+export default Admin;

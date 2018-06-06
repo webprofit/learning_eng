@@ -37,27 +37,44 @@
   color: rgb(184, 123, 10);
   padding: 30px;
   vertical-align: middle;
-  margin: 0 auto;
-  margin-top: 30%;
+  margin: 150px auto;
+  /* margin-bottom: 20%; */
   text-align: center;
   width: 400px;
-  height: 200px;
+  height: 80px;
   background-color: rgb(0, 0, 0);
   box-shadow: 0px 0px 27px -3px #000000;
   border-radius: 10px;
 }
 
+.main-item>.item>.btn-hide-word{
+opacity: 0;
+  float: right;
+    border: none;
+    background-color: #272727;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-transform: uppercase;
+    color: white;
+}
+
 .main-item>.item>span{
+  margin: 50px;
   font-size: 24px;
   text-transform: uppercase;
 }
 
 .main-item>.item>.translate{
-  padding-top: 50px;
-  color: rgb(172, 171, 171);
+  color: rgba(255, 255, 255, 0.13);
+  line-height: 40px;
+}
+.main-item>.item>.translate:hover {
+  transition: .5s;
+  color: white;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.main-item>.item:hover .btn-hide-word{
+  transition: 1s;
+  opacity: 1;
 }

@@ -2,15 +2,10 @@ import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import firebase from "firebase";
-import Todo from './components/to-do/to-do'
+import Admin from './components/Admin/Admin'
 
 const config = {
-  apiKey: "AIzaSyA1p4x8x2fMPV_lPjrNdLe53T2ILik-qBc",
-  authDomain: "dictionary-27d27.firebaseapp.com",
-  databaseURL: "https://dictionary-27d27.firebaseio.com",
-  projectId: "dictionary-27d27",
-  storageBucket: "dictionary-27d27.appspot.com",
-  messagingSenderId: "948734167198"
+  
 };
 
 firebase.initializeApp(config);
@@ -21,14 +16,21 @@ class App extends Component {
     lerningData : [],
     editing: false,
     word: '',
-    translete: ''
+    translete: '',
+    randomItem: {
+      word: 'Rrending well be started',
+      translate: 'waiting...'
+    },
+    hoverItem: false
   }
 
   ref = null;
 
 
   componentDidMount() {
-     this.auth();
+    this.ref = firebase.database().ref();
+    this.getData();
+    // this.auth();
   }
 
   auth = () => {
@@ -41,10 +43,6 @@ class App extends Component {
       firebase.auth().onAuthStateChanged((user) => {
       if (user){
         this.userEmail = user.email;
-        this.ref = firebase.database().ref();
-       
-      
-        this.getData();
       }
     })
   }
@@ -59,6 +57,8 @@ class App extends Component {
           _data.push(newWord);
         }
         this.setState({lerningData: _data})
+        this.setState({randomItem: _data[Math.floor(Math.random()*this.state.lerningData.length)]})
+        setInterval(this.randomItemF, 5000);
         }, (error) => {
        console.log("Error: " + error.code);
       });
@@ -84,23 +84,31 @@ class App extends Component {
 
     }
 
-    showRandom = () => {
-      if (this.state.lerningData.length> 0){
-
-        const rondomItem = this.state.lerningData[Math.floor(Math.random()*this.state.lerningData.length)];
-      
-        return (
-          <div className='main-item'>
-            <div className="item">
-                <span>{rondomItem.word}</span>      <br/>   
-                <span className="translate">{rondomItem.translate}</span>         
-            </div> 
-          </div>
-        )
-        
-      }
-    
+    randomItemF = () => {
+      if (this.state.hoverItem)
+      this.setState({randomItem: this.state.lerningData[Math.floor(Math.random()*this.state.lerningData.length)]}) ;
     }
+
+    // showRandom = () => {
+    //   setInterval(this.randomItemF, 1000);
+    //   if (this.state.lerningData.length> 0){
+
+        
+      
+    //     return (
+    //       <div className='main-item'>
+    //         <div className="item">
+    //             <span>{this.state.randomItem.word}</span>      <br/>   
+    //             <span className="translate">{this.state.randomItem.translate}</span>     <br/>    
+
+    //             <button className="btn-hide-word">Hide</button>    
+    //         </div> 
+    //       </div>
+    //     )
+        
+    //   }
+    
+    // }
 
    
 
@@ -108,7 +116,7 @@ class App extends Component {
     
     return (
      <div>
-    <Todo/>
+    <Admin/>
 
      
     {/* //   this.state.lerningData.map((el, i) => 
@@ -132,7 +140,18 @@ class App extends Component {
       :
       <div>
         <button className="btn btn-danger" onClick={() => this.setState({editing: true})}>Edit</button>
-      {  this.showRandom()}
+        <div className='main-item'
+         onMouseOver={() => this.setState({hoverItem: true})}
+         onMouseLeave={() => this.setState({hoverItem: false})}
+         >
+            <div className="item">
+                <span>{this.state.randomItem.word}</span>      <br/>   
+                <span className="translate">{this.state.randomItem.translate}</span>     <br/>    
+
+                <button className="btn-hide-word">Hide</button>    
+            </div> 
+          </div>
+     
       </div>
   }
     
